@@ -15,6 +15,6 @@ namespace DesafioVendas.Classes
         public string nome_produto;
         public string cod_barra;
         public string qtde_comprada;
-        public string valor_entrada;
+        public double valor_entrada;
     }
 }

@@ -23,6 +23,8 @@ namespace DesafioVendas.Forms
         CRUD_vendas venda_conn = new CRUD_vendas();
         Cliente cliente = new Cliente();
         CRUD_cliente cliente_conn = new CRUD_cliente();
+        Produto produto = new Produto();
+        CRUD_produto produto_conn = new CRUD_produto();
 
         //LIMPA OS CAMPOS
         private void Limpar()
@@ -92,9 +94,14 @@ namespace DesafioVendas.Forms
             venda.cod_barra = tb_cod_barra_venda.Text;
             venda.nome_produto = tb_produto_venda.Text;
             keywords = tb_cod_barra_venda.Text;
-            dt = cliente_conn.Search(keywords);
+            dt = produto_conn.Search(keywords);
             tb_produto_venda.Text = dt.Rows[0]["nome_produto"].ToString();
             tb_vl_produto_venda.Text = dt.Rows[0]["valor_venda"].ToString();
+        }
+
+        private void bt_limpar_vendas_Click(object sender, EventArgs e)
+        {
+            Limpar();
         }
     }
 }

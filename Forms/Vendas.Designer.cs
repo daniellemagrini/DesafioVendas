@@ -160,7 +160,8 @@
             // 
             // tb_produto_venda
             // 
-            this.tb_produto_venda.BackColor = System.Drawing.Color.White;
+            this.tb_produto_venda.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.tb_produto_venda.Enabled = false;
             this.tb_produto_venda.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tb_produto_venda.Location = new System.Drawing.Point(86, 193);
             this.tb_produto_venda.Name = "tb_produto_venda";
@@ -409,6 +410,7 @@
             this.bt_limpar_vendas.TabIndex = 124;
             this.bt_limpar_vendas.Text = "LIMPAR";
             this.bt_limpar_vendas.UseVisualStyleBackColor = false;
+            this.bt_limpar_vendas.Click += new System.EventHandler(this.bt_limpar_vendas_Click);
             // 
             // tb_cod_barra_venda
             // 

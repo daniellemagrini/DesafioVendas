@@ -164,10 +164,10 @@ namespace DesafioVendas.Forms
             compra.nome_produto = tb_produto_compras.Text;
             compra.cod_barra = tb_cod_barra_compras.Text;
             compra.qtde_comprada = tb_qtde_compras.Text;
-            compra.valor_entrada = tb_vl_compra_produto.Text;
+            compra.valor_entrada = Convert.ToDouble(tb_vl_compra_produto.Text);
             produto.nome_produto = tb_produto_compras.Text;
             produto.cod_barra = tb_cod_barra_compras.Text;
-            produto.valor_venda = Convert.ToDouble(tb_vl_compra_produto.Text) * 0.3;
+            produto.valor_venda = Convert.ToDouble(tb_vl_compra_produto.Text) + Convert.ToDouble(tb_vl_compra_produto.Text) * 0.3;
 
             bool sucess = compra_conn.Insert(compra);
             bool sucess2 = produto_conn.Insert(produto);
@@ -194,9 +194,9 @@ namespace DesafioVendas.Forms
             compra.nome_produto = tb_produto_compras.Text;
             compra.cod_barra = tb_cod_barra_compras.Text;
             compra.qtde_comprada = tb_qtde_compras.Text;
-            compra.valor_entrada = tb_vl_compra_produto.Text;
+            compra.valor_entrada = Convert.ToDouble(tb_vl_compra_produto.Text);
 
-            if(tb_nf_compras == null)
+            if (tb_nf_compras == null)
             {
                 MessageBox.Show("Para consultar, é necessário inserir a NF");
             }
@@ -252,7 +252,7 @@ namespace DesafioVendas.Forms
             compra.nome_produto = tb_produto_compras.Text;
             compra.cod_barra = tb_cod_barra_compras.Text;
             compra.qtde_comprada = tb_qtde_compras.Text;
-            compra.valor_entrada = tb_vl_compra_produto.Text;
+            compra.valor_entrada = Convert.ToDouble(tb_vl_compra_produto.Text);
 
             bool sucess = compra_conn.Update(compra);
             if (sucess == true)
