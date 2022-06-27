@@ -236,5 +236,32 @@ namespace DesafioVendas.Conexao_BD
         }
         #endregion
 
+        #region Selecionar dados do DataBase para o CAIXA
+        public DataTable SelectCaixa(Vendas venda) // Para selecionar dados da tabela
+        {
+            SqlConnection conn = new SqlConnection(conexao); // Conectando ao banco de dados
+            DataTable dt = new DataTable();
+
+            try
+            {
+                string sql = "SELECT id_venda, data_venda, valor_total FROM Vendas WHERE data_venda=@data_venda"; // Criando a string com essa frase 
+                SqlCommand cmd = new SqlCommand(sql, conn); // que vai até o bd  e roda a string que quer dizer - selecionar tudo da tabela
+                cmd.Parameters.AddWithValue("@data_venda", venda.data_venda);
+                SqlDataAdapter adapter = new SqlDataAdapter(cmd); // Recebe os dados e armazena
+                conn.Open(); // abrir a conexão
+                adapter.Fill(dt); // preenche a tabela
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.Message); // Se tiver erro, ele mostra
+            }
+            finally
+            {
+                conn.Close(); // Para finalizar, ele fecha a conexao.
+            }
+            return dt; // Retorna a tabela atualizada (com os campos preenchidos)
+        }
+        #endregion
+
     }
 }

@@ -101,6 +101,11 @@
     <Compile Include="Forms\Vendas.Designer.cs">
       <DependentUpon>Vendas.cs</DependentUpon>
     </Compile>
+    <Compile Include="LojaDesafioVendasDataSet.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>LojaDesafioVendasDataSet.xsd</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Forms\Caixa.resx">
@@ -296,6 +301,17 @@
     </None>
     <None Include="Connected Services\WebServiceCorreios\DesafioVendas.WebServiceCorreios.VerificaSeTodosObjetosCanceladosResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="LojaDesafioVendasDataSet.xsc">
+      <DependentUpon>LojaDesafioVendasDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="LojaDesafioVendasDataSet.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>LojaDesafioVendasDataSet.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="LojaDesafioVendasDataSet.xss">
+      <DependentUpon>LojaDesafioVendasDataSet.xsd</DependentUpon>
     </None>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

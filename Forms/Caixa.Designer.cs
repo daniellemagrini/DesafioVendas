@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frm_caixa));
             this.lb_id_caixa = new System.Windows.Forms.Label();
             this.tb_dt_caixa = new System.Windows.Forms.TextBox();
@@ -44,13 +45,22 @@
             this.pb_cadastrar_caixa = new System.Windows.Forms.PictureBox();
             this.bt_cadastrar_caixa = new System.Windows.Forms.Button();
             this.dg_caixa = new System.Windows.Forms.DataGridView();
-            this.dg_entrada = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dg_saida = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.lojaDesafioVendasDataSet = new DesafioVendas.LojaDesafioVendasDataSet();
+            this.vendasBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.vendasTableAdapter = new DesafioVendas.LojaDesafioVendasDataSetTableAdapters.VendasTableAdapter();
+            this.fillToolStrip = new System.Windows.Forms.ToolStrip();
+            this.fillToolStripButton = new System.Windows.Forms.ToolStripButton();
+            this.idvendaDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.datavendaDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.valortotalDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.pb_consultar_caixa)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pb_editar_caixa)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pb_remover_caixa)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pb_cadastrar_caixa)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dg_caixa)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.lojaDesafioVendasDataSet)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.vendasBindingSource)).BeginInit();
+            this.fillToolStrip.SuspendLayout();
             this.SuspendLayout();
             // 
             // lb_id_caixa
@@ -75,7 +85,7 @@
             // 
             // tb_vl_caixa
             // 
-            this.tb_vl_caixa.BackColor = System.Drawing.Color.White;
+            this.tb_vl_caixa.BackColor = System.Drawing.Color.WhiteSmoke;
             this.tb_vl_caixa.Enabled = false;
             this.tb_vl_caixa.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tb_vl_caixa.Location = new System.Drawing.Point(360, 136);
@@ -126,6 +136,7 @@
             this.pb_consultar_caixa.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pb_consultar_caixa.TabIndex = 153;
             this.pb_consultar_caixa.TabStop = false;
+            this.pb_consultar_caixa.Click += new System.EventHandler(this.pb_consultar_caixa_Click);
             // 
             // bt_consultar_caixa
             // 
@@ -235,26 +246,74 @@
             // 
             // dg_caixa
             // 
+            this.dg_caixa.AllowUserToAddRows = false;
+            this.dg_caixa.AllowUserToDeleteRows = false;
+            this.dg_caixa.AllowUserToOrderColumns = true;
+            this.dg_caixa.AutoGenerateColumns = false;
             this.dg_caixa.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dg_caixa.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.dg_entrada,
-            this.dg_saida});
+            this.idvendaDataGridViewTextBoxColumn,
+            this.datavendaDataGridViewTextBoxColumn,
+            this.valortotalDataGridViewTextBoxColumn});
+            this.dg_caixa.DataSource = this.vendasBindingSource;
             this.dg_caixa.Location = new System.Drawing.Point(97, 181);
             this.dg_caixa.Name = "dg_caixa";
-            this.dg_caixa.Size = new System.Drawing.Size(240, 239);
-            this.dg_caixa.TabIndex = 162;
+            this.dg_caixa.ReadOnly = true;
+            this.dg_caixa.Size = new System.Drawing.Size(343, 239);
+            this.dg_caixa.TabIndex = 2;
             // 
-            // dg_entrada
+            // lojaDesafioVendasDataSet
             // 
-            this.dg_entrada.HeaderText = "Entrada";
-            this.dg_entrada.Name = "dg_entrada";
-            this.dg_entrada.ReadOnly = true;
+            this.lojaDesafioVendasDataSet.DataSetName = "LojaDesafioVendasDataSet";
+            this.lojaDesafioVendasDataSet.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
             // 
-            // dg_saida
+            // vendasBindingSource
             // 
-            this.dg_saida.HeaderText = "Saída";
-            this.dg_saida.Name = "dg_saida";
-            this.dg_saida.ReadOnly = true;
+            this.vendasBindingSource.DataMember = "Vendas";
+            this.vendasBindingSource.DataSource = this.lojaDesafioVendasDataSet;
+            // 
+            // vendasTableAdapter
+            // 
+            this.vendasTableAdapter.ClearBeforeFill = true;
+            // 
+            // fillToolStrip
+            // 
+            this.fillToolStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.fillToolStripButton});
+            this.fillToolStrip.Location = new System.Drawing.Point(0, 0);
+            this.fillToolStrip.Name = "fillToolStrip";
+            this.fillToolStrip.Size = new System.Drawing.Size(571, 25);
+            this.fillToolStrip.TabIndex = 162;
+            this.fillToolStrip.Text = "fillToolStrip";
+            // 
+            // fillToolStripButton
+            // 
+            this.fillToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.fillToolStripButton.Name = "fillToolStripButton";
+            this.fillToolStripButton.Size = new System.Drawing.Size(26, 22);
+            this.fillToolStripButton.Text = "Fill";
+            this.fillToolStripButton.Click += new System.EventHandler(this.fillToolStripButton_Click);
+            // 
+            // idvendaDataGridViewTextBoxColumn
+            // 
+            this.idvendaDataGridViewTextBoxColumn.DataPropertyName = "id_venda";
+            this.idvendaDataGridViewTextBoxColumn.HeaderText = "id_venda";
+            this.idvendaDataGridViewTextBoxColumn.Name = "idvendaDataGridViewTextBoxColumn";
+            this.idvendaDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // datavendaDataGridViewTextBoxColumn
+            // 
+            this.datavendaDataGridViewTextBoxColumn.DataPropertyName = "data_venda";
+            this.datavendaDataGridViewTextBoxColumn.HeaderText = "data_venda";
+            this.datavendaDataGridViewTextBoxColumn.Name = "datavendaDataGridViewTextBoxColumn";
+            this.datavendaDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // valortotalDataGridViewTextBoxColumn
+            // 
+            this.valortotalDataGridViewTextBoxColumn.DataPropertyName = "valor_total";
+            this.valortotalDataGridViewTextBoxColumn.HeaderText = "valor_total";
+            this.valortotalDataGridViewTextBoxColumn.Name = "valortotalDataGridViewTextBoxColumn";
+            this.valortotalDataGridViewTextBoxColumn.ReadOnly = true;
             // 
             // frm_caixa
             // 
@@ -262,7 +321,8 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImage = global::DesafioVendas.Properties.Resources.fundo;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.ClientSize = new System.Drawing.Size(571, 432);
+            this.ClientSize = new System.Drawing.Size(571, 440);
+            this.Controls.Add(this.fillToolStrip);
             this.Controls.Add(this.dg_caixa);
             this.Controls.Add(this.lb_id_caixa);
             this.Controls.Add(this.tb_dt_caixa);
@@ -282,11 +342,16 @@
             this.Name = "frm_caixa";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Caixa";
+            this.Load += new System.EventHandler(this.frm_caixa_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pb_consultar_caixa)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pb_editar_caixa)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pb_remover_caixa)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pb_cadastrar_caixa)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dg_caixa)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.lojaDesafioVendasDataSet)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.vendasBindingSource)).EndInit();
+            this.fillToolStrip.ResumeLayout(false);
+            this.fillToolStrip.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -309,7 +374,13 @@
         private System.Windows.Forms.PictureBox pb_cadastrar_caixa;
         private System.Windows.Forms.Button bt_cadastrar_caixa;
         private System.Windows.Forms.DataGridView dg_caixa;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dg_entrada;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dg_saida;
+        private LojaDesafioVendasDataSet lojaDesafioVendasDataSet;
+        private System.Windows.Forms.BindingSource vendasBindingSource;
+        private LojaDesafioVendasDataSetTableAdapters.VendasTableAdapter vendasTableAdapter;
+        private System.Windows.Forms.ToolStrip fillToolStrip;
+        private System.Windows.Forms.ToolStripButton fillToolStripButton;
+        private System.Windows.Forms.DataGridViewTextBoxColumn idvendaDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn datavendaDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn valortotalDataGridViewTextBoxColumn;
     }
 }
