@@ -13,10 +13,10 @@ namespace DesafioVendas.Classes
         public string cpf_cnpj_cliente;
         public string nome_cliente;
         public string nome_produto;
-        public string qtde;
+        public int qtde;
         public string cod_barra;
-        public string valor_produto;
-        public string desconto;
-        public string valor_total;
+        public double valor_produto;
+        public double desconto;
+        public double valor_total;
     }
 }

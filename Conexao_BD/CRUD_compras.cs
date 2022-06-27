@@ -193,14 +193,14 @@ namespace DesafioVendas.Conexao_BD
 
         #region Verifica se já consta no BD
 
-        public bool JaCadastrado(string nf, string produto) // Para pesquisar dados da tabela
+        public bool JaCadastrado(string nf, string cod_barra) // Para pesquisar dados da tabela
         {
             SqlConnection conn = new SqlConnection(conexao); // Conectando ao banco de dados
             DataTable dt = new DataTable();
 
             try
             {
-                string sql = "SELECT * FROM Compras WHERE nota_fiscal LIKE '%" + nf + "%' AND nome_produto LIKE '%" + nf + "%'"; // Criando a string com essa frase 
+                string sql = "SELECT * FROM Compras WHERE nota_fiscal LIKE '%" + nf + "%' AND cod_barra LIKE '%" + cod_barra + "%'"; // Criando a string com essa frase 
                 SqlCommand cmd = new SqlCommand(sql, conn); // que vai até o bd  e roda a string que quer dizer - selecionar tudo da tabela
                 SqlDataAdapter adapter = new SqlDataAdapter(cmd); // Recebe os dados e armazena
                 conn.Open(); // abrir a conexão
@@ -209,6 +209,45 @@ namespace DesafioVendas.Conexao_BD
 
                 if (read.Read())
                 {
+                    return true;
+                }
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.Message); // Se tiver erro, ele mostra
+            }
+            finally
+            {
+                conn.Close(); // Para finalizar, ele fecha a conexao.
+            }
+            return false; // Retorna a tabela atualizada (com os campos preenchidos)
+        }
+        #endregion
+
+        #region ALTERAR APENAS A QUANTIDADE
+
+        public bool AlteraQtde(string cod_barra, Estoque estoque) // Para pesquisar dados da tabela
+        {
+            SqlConnection conn = new SqlConnection(conexao); // Conectando ao banco de dados
+            DataTable dt = new DataTable();
+
+            try
+            {
+                string sql = "SELECT * FROM Estoque WHERE cod_barra LIKE '%" + cod_barra + "%'"; // Criando a string com essa frase 
+                SqlCommand cmd = new SqlCommand(sql, conn); // que vai até o bd  e roda a string que quer dizer - selecionar tudo da tabela
+                SqlDataAdapter adapter = new SqlDataAdapter(cmd); // Recebe os dados e armazena
+                conn.Open(); // abrir a conexão
+                adapter.Fill(dt); // preenche a tabela
+                SqlDataReader read = cmd.ExecuteReader();
+                int qtde_bd = 0;
+
+                if (read.Read())
+                {
+                    qtde_bd = Convert.ToInt32(read["qtde"]);
+                    string sql2 = "UPDATE Estoque SET qtde=@qtde WHERE id_estoque=@id_estoque";
+                    SqlCommand cmd2 = new SqlCommand(sql, conn);
+                    cmd2.Parameters.AddWithValue("@qtde", estoque.qtde + qtde_bd);
+                    cmd2.Parameters.AddWithValue("@id_estoque", estoque.id_estoque);
                     return true;
                 }
             }

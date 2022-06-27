@@ -11,7 +11,7 @@ using System.Windows.Forms;
 
 namespace DesafioVendas.Conexao_BD
 {
-    class CRUD_vendas
+    class CRUD_estoque
     {
         static string conexao = ConfigurationManager.ConnectionStrings["connstring"].ConnectionString;
 
@@ -23,7 +23,7 @@ namespace DesafioVendas.Conexao_BD
 
             try
             {
-                string sql = "SELECT * FROM Vendas"; // Criando a string com essa frase 
+                string sql = "SELECT * FROM Estoque"; // Criando a string com essa frase 
                 SqlCommand cmd = new SqlCommand(sql, conn); // que vai até o bd  e roda a string que quer dizer - selecionar tudo da tabela
                 SqlDataAdapter adapter = new SqlDataAdapter(cmd); // Recebe os dados e armazena
                 conn.Open(); // abrir a conexão
@@ -43,24 +43,18 @@ namespace DesafioVendas.Conexao_BD
 
         #region Inserir dados no BD
 
-        public bool Insert(Vendas vendas)
+        public bool Insert(Estoque estoque)
         {
             bool sucedido = false;
             SqlConnection conn = new SqlConnection(conexao);
 
             try
             {
-                string sql = "INSERT INTO Vendas (data_venda,cpf_cnpj_cliente,nome_cliente,nome_produto,qtde,cod_barra,valor_produto,desconto,valor_total) VALUES (@data_venda,@cpf_cnpj_cliente,@nome_cliente,@nome_produto,@qtde,@cod_barra,@valor_produto,@desconto,@valor_total)";
+                string sql = "INSERT INTO Estoque (cod_barra,qtde,nome_produto) VALUES (@cod_barra,@qtde,@nome_produto)";
                 SqlCommand cmd = new SqlCommand(sql, conn);
-                cmd.Parameters.AddWithValue("@data_venda", vendas.data_venda);
-                cmd.Parameters.AddWithValue("@cpf_cnpj_cliente", vendas.cpf_cnpj_cliente);
-                cmd.Parameters.AddWithValue("@nome_cliente", vendas.nome_cliente);
-                cmd.Parameters.AddWithValue("@nome_produto", vendas.nome_produto);
-                cmd.Parameters.AddWithValue("@qtde", vendas.qtde);
-                cmd.Parameters.AddWithValue("@cod_barra", vendas.cod_barra);
-                cmd.Parameters.AddWithValue("@valor_produto", vendas.valor_produto);
-                cmd.Parameters.AddWithValue("@desconto", vendas.desconto);
-                cmd.Parameters.AddWithValue("@valor_total", vendas.valor_total);
+                cmd.Parameters.AddWithValue("@cod_barra", estoque.cod_barra);
+                cmd.Parameters.AddWithValue("@qtde", estoque.qtde);
+                cmd.Parameters.AddWithValue("@nome_produto", estoque.nome_produto);
 
                 conn.Open();
                 int linhas = cmd.ExecuteNonQuery();
@@ -89,25 +83,18 @@ namespace DesafioVendas.Conexao_BD
 
         #region Atualizar os dados do BD
 
-        public bool Update(Vendas vendas)
+        public bool Update(Estoque estoque)
         {
             bool sucedido = false;
             SqlConnection conn = new SqlConnection(conexao);
 
             try
             {
-                string sql = "UPDATE Vendas SET data_venda=@data_venda, cpf_cnpj_cliente=@cpf_cnpj_cliente, nome_cliente=@nome_cliente, nome_produto=@nome_produto, qtde=@qtde, cod_barra=@cod_barra, valor_produto=@valor_produto, desconto=@desconto, valor_total=@valor_total WHERE id_venda=@id_venda";
+                string sql = "UPDATE Estoque SET cod_barra=@cod_barra, qtde=@qtde, nome_produto=@nome_produto WHERE id_estoque=@id_estoque";
                 SqlCommand cmd = new SqlCommand(sql, conn);
-                cmd.Parameters.AddWithValue("@data_venda", vendas.data_venda);
-                cmd.Parameters.AddWithValue("@cpf_cnpj_cliente", vendas.cpf_cnpj_cliente);
-                cmd.Parameters.AddWithValue("@nome_cliente", vendas.nome_cliente);
-                cmd.Parameters.AddWithValue("@nome_produto", vendas.nome_produto);
-                cmd.Parameters.AddWithValue("@qtde", vendas.qtde);
-                cmd.Parameters.AddWithValue("@cod_barra", vendas.cod_barra);
-                cmd.Parameters.AddWithValue("@valor_produto", vendas.valor_produto);
-                cmd.Parameters.AddWithValue("@desconto", vendas.desconto);
-                cmd.Parameters.AddWithValue("@valor_total", vendas.valor_total);
-                cmd.Parameters.AddWithValue("@id_venda", vendas.id_venda);
+                cmd.Parameters.AddWithValue("@cod_barra", estoque.cod_barra);
+                cmd.Parameters.AddWithValue("@qtde", estoque.qtde);
+                cmd.Parameters.AddWithValue("@nome_produto", estoque.nome_produto);
 
                 conn.Open();
                 int linhas = cmd.ExecuteNonQuery();
@@ -135,16 +122,16 @@ namespace DesafioVendas.Conexao_BD
 
         #region Deletar dados do BD
 
-        public bool Delete(Vendas vendas)
+        public bool Delete(Estoque estoque)
         {
             bool sucedido = false;
             SqlConnection conn = new SqlConnection(conexao);
 
             try
             {
-                string sql = "DELETE FROM Vendas WHERE id_venda=@id_venda";
+                string sql = "DELETE FROM Estoque WHERE id_estoque=@id_estoque";
                 SqlCommand cmd = new SqlCommand(sql, conn);
-                cmd.Parameters.AddWithValue("@id_venda", vendas.id_venda);
+                cmd.Parameters.AddWithValue("@id_estoque", estoque.id_estoque);
 
                 conn.Open();
                 int linhas = cmd.ExecuteNonQuery();
@@ -179,7 +166,7 @@ namespace DesafioVendas.Conexao_BD
 
             try
             {
-                string sql = "SELECT * FROM Vendas WHERE cpf_cnpj_cliente LIKE '%" + keywords + "%' OR cod_barra LIKE '%" + keywords + "%'"; // Criando a string com essa frase 
+                string sql = "SELECT * FROM Estoque WHERE cod_barra LIKE '%" + keywords + "%' OR nome_produto LIKE '%" + keywords + "%'"; // Criando a string com essa frase 
                 SqlCommand cmd = new SqlCommand(sql, conn); // que vai até o bd  e roda a string que quer dizer - selecionar tudo da tabela
                 SqlDataAdapter adapter = new SqlDataAdapter(cmd); // Recebe os dados e armazena
                 conn.Open(); // abrir a conexão
@@ -196,45 +183,5 @@ namespace DesafioVendas.Conexao_BD
             return dt; // Retorna a tabela atualizada (com os campos preenchidos)
         }
         #endregion
-
-        #region ALTERAR APENAS A QUANTIDADE
-
-        public bool AlteraQtde(string cod_barra, Estoque estoque) // Para pesquisar dados da tabela
-        {
-            SqlConnection conn = new SqlConnection(conexao); // Conectando ao banco de dados
-            DataTable dt = new DataTable();
-
-            try
-            {
-                string sql = "SELECT * FROM Estoque WHERE cod_barra LIKE '%" + cod_barra + "%'"; // Criando a string com essa frase 
-                SqlCommand cmd = new SqlCommand(sql, conn); // que vai até o bd  e roda a string que quer dizer - selecionar tudo da tabela
-                SqlDataAdapter adapter = new SqlDataAdapter(cmd); // Recebe os dados e armazena
-                conn.Open(); // abrir a conexão
-                adapter.Fill(dt); // preenche a tabela
-                SqlDataReader read = cmd.ExecuteReader();
-                int qtde_bd = 0;
-
-                if (read.Read())
-                {
-                    qtde_bd = Convert.ToInt32(read["qtde"]);
-                    string sql2 = "UPDATE Estoque SET qtde=@qtde WHERE id_estoque=@id_estoque";
-                    SqlCommand cmd2 = new SqlCommand(sql, conn);
-                    cmd2.Parameters.AddWithValue("@qtde", estoque.qtde + qtde_bd);
-                    cmd2.Parameters.AddWithValue("@id_estoque", estoque.id_estoque);
-                    return true;
-                }
-            }
-            catch (Exception e)
-            {
-                MessageBox.Show(e.Message); // Se tiver erro, ele mostra
-            }
-            finally
-            {
-                conn.Close(); // Para finalizar, ele fecha a conexao.
-            }
-            return false; // Retorna a tabela atualizada (com os campos preenchidos)
-        }
-        #endregion
-
     }
 }

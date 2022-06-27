@@ -23,6 +23,8 @@ namespace DesafioVendas.Forms
         CRUD_compras compra_conn = new CRUD_compras();
         Produto produto = new Produto();
         CRUD_produto produto_conn = new CRUD_produto();
+        Estoque estoque = new Estoque();
+        CRUD_estoque estoque_conn = new CRUD_estoque();
 
         //LIMPA OS CAMPOS
         private void Limpar()
@@ -128,7 +130,8 @@ namespace DesafioVendas.Forms
         }
 
         private void pb_cadastrar_compras_Click(object sender, EventArgs e)
-        { 
+        {
+
             // VERIFICA SE O CAMPO ESTÁ VAZIO
             Tratamento ttb = new Tratamento();
             if (ttb.CampoVazio(tb_nf_compras, "NF"))
@@ -152,36 +155,52 @@ namespace DesafioVendas.Forms
                 return;
             }
 
-            bool existente = compra_conn.JaCadastrado(tb_nf_compras.Text, tb_produto_compras.Text);
+            bool existente = compra_conn.JaCadastrado(tb_nf_compras.Text, tb_cod_barra_compras.Text);
             if (existente == true)
             {
-                MessageBox.Show("Nota já cadastrada!");
-            }
-
-            //INSERE NO BD
-            compra.nota_fiscal = tb_nf_compras.Text;
-            compra.data_entrada = tb_dt_entrada_compras.Text;
-            compra.nome_produto = tb_produto_compras.Text;
-            compra.cod_barra = tb_cod_barra_compras.Text;
-            compra.qtde_comprada = tb_qtde_compras.Text;
-            compra.valor_entrada = Convert.ToDouble(tb_vl_compra_produto.Text);
-            produto.nome_produto = tb_produto_compras.Text;
-            produto.cod_barra = tb_cod_barra_compras.Text;
-            produto.valor_venda = Convert.ToDouble(tb_vl_compra_produto.Text) + Convert.ToDouble(tb_vl_compra_produto.Text) * 0.3;
-
-            bool sucess = compra_conn.Insert(compra);
-            bool sucess2 = produto_conn.Insert(produto);
-            
-            if (sucess == true)
-            {
-                //DA A MENSAGEM PARA AVISAR QUE FOI CADASTRADO OU NÃO E LIMPA TODOS OS CAMPOS
-                MessageBox.Show("Entrada Cadastrada com sucesso!");
-                Limpar();
+                MessageBox.Show("Nota já cadastrada no sistema!");
             }
             else
             {
-                MessageBox.Show("Não foi possível dar entrada nessa nota! Favor tentar novamente ou entrar em contato com o suporte do sistema.");
-            }    
+                //INSERE NO BD
+                compra.nota_fiscal = tb_nf_compras.Text;
+                compra.data_entrada = tb_dt_entrada_compras.Text;
+                compra.nome_produto = tb_produto_compras.Text;
+                compra.cod_barra = tb_cod_barra_compras.Text;
+                compra.qtde_comprada = tb_qtde_compras.Text;
+                compra.valor_entrada = Convert.ToDouble(tb_vl_compra_produto.Text);
+                produto.nome_produto = tb_produto_compras.Text;
+                produto.cod_barra = tb_cod_barra_compras.Text;
+                produto.valor_venda = Convert.ToDouble(tb_vl_compra_produto.Text) + Convert.ToDouble(tb_vl_compra_produto.Text) * 0.3;
+                estoque.nome_produto = tb_produto_compras.Text;
+                estoque.cod_barra = tb_cod_barra_compras.Text;
+                estoque.qtde = Convert.ToInt32(tb_qtde_compras.Text);
+
+                bool sucess = compra_conn.Insert(compra);
+
+                if (sucess == true)
+                {
+                    bool prodExist = compra_conn.AlteraQtde(tb_cod_barra_compras.Text, estoque);
+
+                    if (prodExist == true)
+                    {
+                        //DA A MENSAGEM PARA AVISAR QUE FOI CADASTRADO OU NÃO E LIMPA TODOS OS CAMPOS
+                        MessageBox.Show("Entrada Cadastrada com sucesso! Quantidade do produto no estoque foi alterada");
+                        Limpar();
+                    }
+                    else
+                    {
+                        bool sucess2 = produto_conn.Insert(produto);
+                        bool sucess3 = estoque_conn.Insert(estoque);
+                        MessageBox.Show("Entrada Cadastrada com sucesso!");
+                        Limpar();
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Não foi possível dar entrada nessa nota! Favor tentar novamente ou entrar em contato com o suporte do sistema.");
+                }
+            }
         }
 
         private void pb_consultar_compras_Click(object sender, EventArgs e)
@@ -194,7 +213,6 @@ namespace DesafioVendas.Forms
             compra.nome_produto = tb_produto_compras.Text;
             compra.cod_barra = tb_cod_barra_compras.Text;
             compra.qtde_comprada = tb_qtde_compras.Text;
-            compra.valor_entrada = Convert.ToDouble(tb_vl_compra_produto.Text);
 
             if (tb_nf_compras == null)
             {
@@ -225,11 +243,15 @@ namespace DesafioVendas.Forms
         {
             DataTable dt = new DataTable();
             compra.id_compras = Convert.ToInt32(tb_id_compras.Text);
+            estoque.id_estoque = Convert.ToInt32(tb_id_compras.Text);
 
             bool sucess = compra_conn.Delete(compra);
+            bool sucess3 = estoque_conn.Delete(estoque);
+
             if (sucess == true)
             {
                 Limpar();
+                pb_cadastrar_compras.Enabled = true;
                 MessageBox.Show("Compra removida com sucesso");
             }
             else
@@ -252,13 +274,13 @@ namespace DesafioVendas.Forms
             compra.nome_produto = tb_produto_compras.Text;
             compra.cod_barra = tb_cod_barra_compras.Text;
             compra.qtde_comprada = tb_qtde_compras.Text;
-            compra.valor_entrada = Convert.ToDouble(tb_vl_compra_produto.Text);
 
             bool sucess = compra_conn.Update(compra);
             if (sucess == true)
             {
                 MessageBox.Show("Compra atualizado");
                 Limpar();
+                HabilitarCampos();
             }
             else
             {

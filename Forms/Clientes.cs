@@ -457,6 +457,7 @@ namespace DesafioVendas.Forms
             if ( sucess == true)
             {
                 Limpar();
+                HabilitarCampos();
                 MessageBox.Show("Cliente removido com sucesso");
             }
             else
@@ -493,6 +494,7 @@ namespace DesafioVendas.Forms
             { 
                 MessageBox.Show("Cliente atualizado");
                 Limpar();
+                HabilitarCampos();
             }
             else
             {

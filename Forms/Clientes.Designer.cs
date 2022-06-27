@@ -155,7 +155,7 @@
             this.bt_editar_cliente.Location = new System.Drawing.Point(251, 12);
             this.bt_editar_cliente.Name = "bt_editar_cliente";
             this.bt_editar_cliente.Size = new System.Drawing.Size(90, 70);
-            this.bt_editar_cliente.TabIndex = 7;
+            this.bt_editar_cliente.TabIndex = 20;
             this.bt_editar_cliente.Text = "EDITAR";
             this.bt_editar_cliente.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
             this.bt_editar_cliente.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;

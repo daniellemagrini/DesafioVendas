@@ -51,11 +51,13 @@
   <ItemGroup>
     <Compile Include="Classes\Cliente.cs" />
     <Compile Include="Classes\Compras.cs" />
+    <Compile Include="Classes\Estoque.cs" />
     <Compile Include="Classes\Produto.cs" />
     <Compile Include="Classes\Tratamento.cs" />
     <Compile Include="Classes\Vendas.cs" />
     <Compile Include="Conexao_BD\CRUD_cliente.cs" />
     <Compile Include="Conexao_BD\CRUD_compras.cs" />
+    <Compile Include="Conexao_BD\CRUD_estoque.cs" />
     <Compile Include="Conexao_BD\CRUD_produto.cs" />
     <Compile Include="Conexao_BD\CRUD_vendas.cs" />
     <Compile Include="Connected Services\WebServiceCorreios\Reference.cs">
@@ -93,7 +95,6 @@
     <Compile Include="Forms\Compras.Designer.cs">
       <DependentUpon>Compras.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\Produtos.cs" />
     <Compile Include="Forms\Vendas.cs">
       <SubType>Form</SubType>
     </Compile>

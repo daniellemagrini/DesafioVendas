@@ -93,7 +93,9 @@
             this.tb_desconto_venda.Location = new System.Drawing.Point(91, 264);
             this.tb_desconto_venda.Name = "tb_desconto_venda";
             this.tb_desconto_venda.Size = new System.Drawing.Size(53, 20);
-            this.tb_desconto_venda.TabIndex = 8;
+            this.tb_desconto_venda.TabIndex = 4;
+            this.tb_desconto_venda.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.tb_desconto_venda_KeyPress);
+            this.tb_desconto_venda.Leave += new System.EventHandler(this.tb_desconto_venda_Leave);
             // 
             // lb_desconto_venda
             // 
@@ -145,7 +147,9 @@
             this.tb_qtde_produto_venda.Location = new System.Drawing.Point(387, 193);
             this.tb_qtde_produto_venda.Name = "tb_qtde_produto_venda";
             this.tb_qtde_produto_venda.Size = new System.Drawing.Size(60, 20);
-            this.tb_qtde_produto_venda.TabIndex = 5;
+            this.tb_qtde_produto_venda.TabIndex = 3;
+            this.tb_qtde_produto_venda.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.tb_qtde_produto_venda_KeyPress);
+            this.tb_qtde_produto_venda.Leave += new System.EventHandler(this.tb_qtde_produto_venda_Leave);
             // 
             // lb_qtde_produto_venda
             // 
@@ -207,7 +211,7 @@
             this.tb_cpf_cnpj_venda.Location = new System.Drawing.Point(345, 124);
             this.tb_cpf_cnpj_venda.Name = "tb_cpf_cnpj_venda";
             this.tb_cpf_cnpj_venda.Size = new System.Drawing.Size(102, 20);
-            this.tb_cpf_cnpj_venda.TabIndex = 2;
+            this.tb_cpf_cnpj_venda.TabIndex = 1;
             this.tb_cpf_cnpj_venda.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.tb_cpf_cnpj_venda_KeyPress);
             this.tb_cpf_cnpj_venda.Leave += new System.EventHandler(this.tb_cpf_cnpj_venda_Leave);
             // 
@@ -265,6 +269,7 @@
             this.pb_consultar_venda.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pb_consultar_venda.TabIndex = 91;
             this.pb_consultar_venda.TabStop = false;
+            this.pb_consultar_venda.Click += new System.EventHandler(this.pb_consultar_venda_Click);
             // 
             // bt_consultar_venda
             // 
@@ -276,7 +281,7 @@
             this.bt_consultar_venda.Location = new System.Drawing.Point(332, 12);
             this.bt_consultar_venda.Name = "bt_consultar_venda";
             this.bt_consultar_venda.Size = new System.Drawing.Size(90, 70);
-            this.bt_consultar_venda.TabIndex = 90;
+            this.bt_consultar_venda.TabIndex = 13;
             this.bt_consultar_venda.Text = "CONSULTAR";
             this.bt_consultar_venda.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
             this.bt_consultar_venda.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
@@ -286,6 +291,7 @@
             // 
             this.pb_editar_venda.BackColor = System.Drawing.Color.White;
             this.pb_editar_venda.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.pb_editar_venda.Enabled = false;
             this.pb_editar_venda.Image = global::DesafioVendas.Properties.Resources.editar;
             this.pb_editar_venda.Location = new System.Drawing.Point(259, 22);
             this.pb_editar_venda.Name = "pb_editar_venda";
@@ -298,13 +304,14 @@
             // 
             this.bt_editar_venda.BackColor = System.Drawing.Color.White;
             this.bt_editar_venda.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.bt_editar_venda.Enabled = false;
             this.bt_editar_venda.FlatAppearance.BorderSize = 3;
             this.bt_editar_venda.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.bt_editar_venda.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.bt_editar_venda.Location = new System.Drawing.Point(236, 12);
             this.bt_editar_venda.Name = "bt_editar_venda";
             this.bt_editar_venda.Size = new System.Drawing.Size(90, 70);
-            this.bt_editar_venda.TabIndex = 88;
+            this.bt_editar_venda.TabIndex = 12;
             this.bt_editar_venda.Text = "EDITAR";
             this.bt_editar_venda.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
             this.bt_editar_venda.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
@@ -314,6 +321,7 @@
             // 
             this.pb_remover_venda.BackColor = System.Drawing.Color.White;
             this.pb_remover_venda.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.pb_remover_venda.Enabled = false;
             this.pb_remover_venda.Image = global::DesafioVendas.Properties.Resources.menos;
             this.pb_remover_venda.Location = new System.Drawing.Point(163, 22);
             this.pb_remover_venda.Name = "pb_remover_venda";
@@ -326,13 +334,14 @@
             // 
             this.bt_remover_venda.BackColor = System.Drawing.Color.White;
             this.bt_remover_venda.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.bt_remover_venda.Enabled = false;
             this.bt_remover_venda.FlatAppearance.BorderSize = 3;
             this.bt_remover_venda.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.bt_remover_venda.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.bt_remover_venda.Location = new System.Drawing.Point(140, 12);
             this.bt_remover_venda.Name = "bt_remover_venda";
             this.bt_remover_venda.Size = new System.Drawing.Size(90, 70);
-            this.bt_remover_venda.TabIndex = 86;
+            this.bt_remover_venda.TabIndex = 11;
             this.bt_remover_venda.Text = "REMOVER";
             this.bt_remover_venda.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
             this.bt_remover_venda.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
@@ -349,6 +358,7 @@
             this.pb_cadastrar_venda.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pb_cadastrar_venda.TabIndex = 85;
             this.pb_cadastrar_venda.TabStop = false;
+            this.pb_cadastrar_venda.Click += new System.EventHandler(this.pb_cadastrar_venda_Click);
             // 
             // bt_cadastrar_venda
             // 
@@ -360,7 +370,7 @@
             this.bt_cadastrar_venda.Location = new System.Drawing.Point(44, 12);
             this.bt_cadastrar_venda.Name = "bt_cadastrar_venda";
             this.bt_cadastrar_venda.Size = new System.Drawing.Size(90, 70);
-            this.bt_cadastrar_venda.TabIndex = 0;
+            this.bt_cadastrar_venda.TabIndex = 10;
             this.bt_cadastrar_venda.Text = "CADASTRAR";
             this.bt_cadastrar_venda.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
             this.bt_cadastrar_venda.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
@@ -369,18 +379,18 @@
             // tb_dt_venda
             // 
             this.tb_dt_venda.BackColor = System.Drawing.Color.White;
-            this.tb_dt_venda.Enabled = false;
             this.tb_dt_venda.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tb_dt_venda.Location = new System.Drawing.Point(161, 123);
             this.tb_dt_venda.Name = "tb_dt_venda";
             this.tb_dt_venda.Size = new System.Drawing.Size(102, 20);
-            this.tb_dt_venda.TabIndex = 1;
+            this.tb_dt_venda.TabIndex = 0;
             this.tb_dt_venda.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.tb_dt_venda_KeyPress);
             // 
             // bt_salvar_vendas
             // 
             this.bt_salvar_vendas.BackColor = System.Drawing.Color.White;
             this.bt_salvar_vendas.Cursor = System.Windows.Forms.Cursors.Default;
+            this.bt_salvar_vendas.Enabled = false;
             this.bt_salvar_vendas.FlatAppearance.BorderColor = System.Drawing.Color.Red;
             this.bt_salvar_vendas.FlatAppearance.BorderSize = 3;
             this.bt_salvar_vendas.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Gray;
@@ -419,7 +429,7 @@
             this.tb_cod_barra_venda.Location = new System.Drawing.Point(141, 228);
             this.tb_cod_barra_venda.Name = "tb_cod_barra_venda";
             this.tb_cod_barra_venda.Size = new System.Drawing.Size(126, 20);
-            this.tb_cod_barra_venda.TabIndex = 126;
+            this.tb_cod_barra_venda.TabIndex = 2;
             this.tb_cod_barra_venda.Leave += new System.EventHandler(this.tb_cod_barra_venda_Leave);
             // 
             // frm_vendas

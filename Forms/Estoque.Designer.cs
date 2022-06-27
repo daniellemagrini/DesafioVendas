@@ -45,6 +45,8 @@
             this.pb_cadastrar_estoque = new System.Windows.Forms.PictureBox();
             this.bt_cadastrar_estoque = new System.Windows.Forms.Button();
             this.lb_id_estoque = new System.Windows.Forms.Label();
+            this.bt_salvar_compra = new System.Windows.Forms.Button();
+            this.bt_limpar_compra = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pb_consultar_estoque)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pb_editar_estoque)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pb_remover_estoque)).BeginInit();
@@ -54,12 +56,13 @@
             // tb_produto_estoque
             // 
             this.tb_produto_estoque.BackColor = System.Drawing.Color.White;
-            this.tb_produto_estoque.Enabled = false;
             this.tb_produto_estoque.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tb_produto_estoque.Location = new System.Drawing.Point(184, 127);
             this.tb_produto_estoque.Name = "tb_produto_estoque";
             this.tb_produto_estoque.Size = new System.Drawing.Size(259, 20);
             this.tb_produto_estoque.TabIndex = 0;
+            this.tb_produto_estoque.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.tb_produto_estoque_KeyPress);
+            this.tb_produto_estoque.Leave += new System.EventHandler(this.tb_produto_estoque_Leave);
             // 
             // tb_qtde_compras
             // 
@@ -85,12 +88,12 @@
             // tb_cod_barra_compras
             // 
             this.tb_cod_barra_compras.BackColor = System.Drawing.Color.White;
-            this.tb_cod_barra_compras.Enabled = false;
             this.tb_cod_barra_compras.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tb_cod_barra_compras.Location = new System.Drawing.Point(140, 164);
             this.tb_cod_barra_compras.Name = "tb_cod_barra_compras";
             this.tb_cod_barra_compras.Size = new System.Drawing.Size(162, 20);
             this.tb_cod_barra_compras.TabIndex = 1;
+            this.tb_cod_barra_compras.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.tb_cod_barra_compras_KeyPress);
             // 
             // lb_cod_barra_compras
             // 
@@ -135,6 +138,7 @@
             this.pb_consultar_estoque.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pb_consultar_estoque.TabIndex = 132;
             this.pb_consultar_estoque.TabStop = false;
+            this.pb_consultar_estoque.Click += new System.EventHandler(this.pb_consultar_estoque_Click);
             // 
             // bt_consultar_estoque
             // 
@@ -156,6 +160,7 @@
             // 
             this.pb_editar_estoque.BackColor = System.Drawing.Color.White;
             this.pb_editar_estoque.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.pb_editar_estoque.Enabled = false;
             this.pb_editar_estoque.Image = global::DesafioVendas.Properties.Resources.editar;
             this.pb_editar_estoque.Location = new System.Drawing.Point(255, 25);
             this.pb_editar_estoque.Name = "pb_editar_estoque";
@@ -168,6 +173,7 @@
             // 
             this.bt_editar_estoque.BackColor = System.Drawing.Color.White;
             this.bt_editar_estoque.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.bt_editar_estoque.Enabled = false;
             this.bt_editar_estoque.FlatAppearance.BorderSize = 3;
             this.bt_editar_estoque.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.bt_editar_estoque.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -251,6 +257,42 @@
             this.lb_id_estoque.TabIndex = 145;
             this.lb_id_estoque.Text = "ID:";
             // 
+            // bt_salvar_compra
+            // 
+            this.bt_salvar_compra.BackColor = System.Drawing.Color.White;
+            this.bt_salvar_compra.Cursor = System.Windows.Forms.Cursors.Default;
+            this.bt_salvar_compra.Enabled = false;
+            this.bt_salvar_compra.FlatAppearance.BorderColor = System.Drawing.Color.Red;
+            this.bt_salvar_compra.FlatAppearance.BorderSize = 3;
+            this.bt_salvar_compra.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Gray;
+            this.bt_salvar_compra.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.bt_salvar_compra.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.bt_salvar_compra.ForeColor = System.Drawing.Color.Indigo;
+            this.bt_salvar_compra.Location = new System.Drawing.Point(309, 91);
+            this.bt_salvar_compra.Name = "bt_salvar_compra";
+            this.bt_salvar_compra.Size = new System.Drawing.Size(63, 20);
+            this.bt_salvar_compra.TabIndex = 147;
+            this.bt_salvar_compra.Text = "SALVAR";
+            this.bt_salvar_compra.UseVisualStyleBackColor = false;
+            // 
+            // bt_limpar_compra
+            // 
+            this.bt_limpar_compra.BackColor = System.Drawing.Color.White;
+            this.bt_limpar_compra.Cursor = System.Windows.Forms.Cursors.Default;
+            this.bt_limpar_compra.FlatAppearance.BorderColor = System.Drawing.Color.Red;
+            this.bt_limpar_compra.FlatAppearance.BorderSize = 3;
+            this.bt_limpar_compra.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Gray;
+            this.bt_limpar_compra.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.bt_limpar_compra.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.bt_limpar_compra.ForeColor = System.Drawing.Color.Indigo;
+            this.bt_limpar_compra.Location = new System.Drawing.Point(378, 91);
+            this.bt_limpar_compra.Name = "bt_limpar_compra";
+            this.bt_limpar_compra.Size = new System.Drawing.Size(63, 20);
+            this.bt_limpar_compra.TabIndex = 146;
+            this.bt_limpar_compra.Text = "LIMPAR";
+            this.bt_limpar_compra.UseVisualStyleBackColor = false;
+            this.bt_limpar_compra.Click += new System.EventHandler(this.bt_limpar_compra_Click);
+            // 
             // frm_estoque
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -258,6 +300,8 @@
             this.BackgroundImage = global::DesafioVendas.Properties.Resources.fundo;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ClientSize = new System.Drawing.Size(465, 225);
+            this.Controls.Add(this.bt_salvar_compra);
+            this.Controls.Add(this.bt_limpar_compra);
             this.Controls.Add(this.lb_id_estoque);
             this.Controls.Add(this.tb_produto_estoque);
             this.Controls.Add(this.tb_qtde_compras);
@@ -305,5 +349,7 @@
         private System.Windows.Forms.PictureBox pb_cadastrar_estoque;
         private System.Windows.Forms.Button bt_cadastrar_estoque;
         private System.Windows.Forms.Label lb_id_estoque;
+        private System.Windows.Forms.Button bt_salvar_compra;
+        private System.Windows.Forms.Button bt_limpar_compra;
     }
 }
