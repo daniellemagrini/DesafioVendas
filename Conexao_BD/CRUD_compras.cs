@@ -173,7 +173,7 @@ namespace DesafioVendas.Conexao_BD
 
             try
             {
-                string sql = "SELECT * FROM Compras WHERE nota_fiscal LIKE '%" + keywords + "%' OR nome_produto LIKE '%" + keywords + "%' OR cod_barra LIKE '%" + keywords + "%'"; // Criando a string com essa frase 
+                string sql = "SELECT * FROM Compras WHERE nota_fiscal LIKE '%" + keywords + "%'"; // Criando a string com essa frase 
                 SqlCommand cmd = new SqlCommand(sql, conn); // que vai até o bd  e roda a string que quer dizer - selecionar tudo da tabela
                 SqlDataAdapter adapter = new SqlDataAdapter(cmd); // Recebe os dados e armazena
                 conn.Open(); // abrir a conexão
@@ -224,43 +224,5 @@ namespace DesafioVendas.Conexao_BD
         }
         #endregion
 
-        #region ALTERAR APENAS A QUANTIDADE
-
-        public bool AlteraQtde(string cod_barra, Estoque estoque) // Para pesquisar dados da tabela
-        {
-            SqlConnection conn = new SqlConnection(conexao); // Conectando ao banco de dados
-            DataTable dt = new DataTable();
-
-            try
-            {
-                string sql = "SELECT * FROM Estoque WHERE cod_barra LIKE '%" + cod_barra + "%'"; // Criando a string com essa frase 
-                SqlCommand cmd = new SqlCommand(sql, conn); // que vai até o bd  e roda a string que quer dizer - selecionar tudo da tabela
-                SqlDataAdapter adapter = new SqlDataAdapter(cmd); // Recebe os dados e armazena
-                conn.Open(); // abrir a conexão
-                adapter.Fill(dt); // preenche a tabela
-                SqlDataReader read = cmd.ExecuteReader();
-                int qtde_bd = 0;
-
-                if (read.Read())
-                {
-                    qtde_bd = Convert.ToInt32(read["qtde"]);
-                    string sql2 = "UPDATE Estoque SET qtde=@qtde WHERE id_estoque=@id_estoque";
-                    SqlCommand cmd2 = new SqlCommand(sql, conn);
-                    cmd2.Parameters.AddWithValue("@qtde", estoque.qtde + qtde_bd);
-                    cmd2.Parameters.AddWithValue("@id_estoque", estoque.id_estoque);
-                    return true;
-                }
-            }
-            catch (Exception e)
-            {
-                MessageBox.Show(e.Message); // Se tiver erro, ele mostra
-            }
-            finally
-            {
-                conn.Close(); // Para finalizar, ele fecha a conexao.
-            }
-            return false; // Retorna a tabela atualizada (com os campos preenchidos)
-        }
-        #endregion
     }
 }

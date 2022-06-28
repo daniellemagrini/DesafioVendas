@@ -176,29 +176,45 @@ namespace DesafioVendas.Forms
                 estoque.cod_barra = tb_cod_barra_compras.Text;
                 estoque.qtde = Convert.ToInt32(tb_qtde_compras.Text);
 
-                bool sucess = compra_conn.Insert(compra);
+                DataTable dt = new DataTable();
+                DataTable dt2 = new DataTable();
+                string cod;
+                cod = tb_cod_barra_compras.Text;
+                dt = estoque_conn.Search(cod);
+                dt2 = produto_conn.Search(cod);
 
-                if (sucess == true)
+                if (dt.Rows.Count <= 0)
                 {
-                    bool prodExist = compra_conn.AlteraQtde(tb_cod_barra_compras.Text, estoque);
+                    bool sucess = compra_conn.Insert(compra);
+                    bool sucess2 = produto_conn.Insert(produto);
+                    bool sucess3 = estoque_conn.Insert(estoque);
+                    MessageBox.Show("Entrada Cadastrada com sucesso!");
+                    Limpar();
+                }
+                else
+                {
+                    bool sucess = compra_conn.Insert(compra);
+                    string id_estoque = dt.Rows[0]["id_estoque"].ToString();
+                    string qtde_estoque = dt.Rows[0]["qtde"].ToString();
+                    estoque.id_estoque = Convert.ToInt32(id_estoque);
+                    estoque.qtde = Convert.ToInt32(qtde_estoque) + Convert.ToInt32(tb_qtde_compras.Text);
 
-                    if (prodExist == true)
+                    string id_produto = dt2.Rows[0]["id_produto"].ToString();
+                    produto.id_produto = Convert.ToInt32(id_produto);
+                    produto.valor_venda = Convert.ToDouble(tb_vl_compra_produto.Text) * 0.3 + Convert.ToDouble(tb_vl_compra_produto.Text);
+
+                    bool sucessEst = estoque_conn.Update(estoque);
+                    bool sucessProd = produto_conn.Update(produto);
+
+                    if (sucessEst == true && sucessProd == true)
                     {
-                        //DA A MENSAGEM PARA AVISAR QUE FOI CADASTRADO OU NÃO E LIMPA TODOS OS CAMPOS
-                        MessageBox.Show("Entrada Cadastrada com sucesso! Quantidade do produto no estoque foi alterada");
+                        MessageBox.Show("Quantidade e valor do produto atualizada no sistema");
                         Limpar();
                     }
                     else
                     {
-                        bool sucess2 = produto_conn.Insert(produto);
-                        bool sucess3 = estoque_conn.Insert(estoque);
-                        MessageBox.Show("Entrada Cadastrada com sucesso!");
-                        Limpar();
+                        MessageBox.Show("Não foi possível dar entrada nessa nota! Favor tentar novamente ou entrar em contato com o suporte do sistema.");
                     }
-                }
-                else
-                {
-                    MessageBox.Show("Não foi possível dar entrada nessa nota! Favor tentar novamente ou entrar em contato com o suporte do sistema.");
                 }
             }
         }
@@ -214,22 +230,30 @@ namespace DesafioVendas.Forms
             compra.cod_barra = tb_cod_barra_compras.Text;
             compra.qtde_comprada = tb_qtde_compras.Text;
 
-            if (tb_nf_compras == null)
+            if (tb_nf_compras.Text == "")
             {
                 MessageBox.Show("Para consultar, é necessário inserir a NF");
             }
             else
             {
-                nf = tb_nf_compras.Text;
+                nf = tb_nf_compras.Text; 
                 dt = compra_conn.Search(nf);
-                tb_id_compras.Text = dt.Rows[0]["id_compras"].ToString();
-                tb_nf_compras.Text = dt.Rows[0]["nota_fiscal"].ToString();
-                tb_dt_entrada_compras.Text = dt.Rows[0]["data_entrada"].ToString();
-                tb_produto_compras.Text = dt.Rows[0]["nome_produto"].ToString();
-                tb_qtde_compras.Text = dt.Rows[0]["cod_barra"].ToString();
-                tb_cod_barra_compras.Text = dt.Rows[0]["qtde_comprada"].ToString();
-                tb_vl_compra_produto.Text = dt.Rows[0]["valor_entrada"].ToString();
-                DesabilitarCampos();
+
+                if (dt.Rows.Count > 0)
+                {
+                    tb_id_compras.Text = dt.Rows[0]["id_compras"].ToString();
+                    tb_nf_compras.Text = dt.Rows[0]["nota_fiscal"].ToString();
+                    tb_dt_entrada_compras.Text = dt.Rows[0]["data_entrada"].ToString();
+                    tb_produto_compras.Text = dt.Rows[0]["nome_produto"].ToString();
+                    tb_qtde_compras.Text = dt.Rows[0]["qtde_comprada"].ToString();
+                    tb_cod_barra_compras.Text = dt.Rows[0]["cod_barra"].ToString();
+                    tb_vl_compra_produto.Text = dt.Rows[0]["valor_entrada"].ToString();
+                    DesabilitarCampos();
+                }
+                else
+                {
+                    MessageBox.Show("Nota não encontrada");
+                }
             }
         }
 
@@ -241,22 +265,48 @@ namespace DesafioVendas.Forms
 
         private void pb_remover_compras_Click(object sender, EventArgs e)
         {
-            DataTable dt = new DataTable();
             compra.id_compras = Convert.ToInt32(tb_id_compras.Text);
-            estoque.id_estoque = Convert.ToInt32(tb_id_compras.Text);
+            estoque.cod_barra = tb_cod_barra_compras.Text;
+            estoque.nome_produto = tb_produto_compras.Text;
 
-            bool sucess = compra_conn.Delete(compra);
-            bool sucess3 = estoque_conn.Delete(estoque);
+            DataTable dt = new DataTable();
+            string cod;
+            cod = tb_cod_barra_compras.Text;
+            dt = estoque_conn.Search(cod);
 
-            if (sucess == true)
+            string id_estoque = dt.Rows[0]["id_estoque"].ToString();
+            string qtde_estoque_temp = dt.Rows[0]["qtde"].ToString();
+            int qtde_estoque = Convert.ToInt32(qtde_estoque_temp);
+            estoque.id_estoque = Convert.ToInt32(id_estoque);
+            int qtde_compra = Convert.ToInt32(tb_qtde_compras.Text);
+            estoque.qtde = qtde_estoque - qtde_compra;
+
+            if (qtde_estoque > qtde_compra)
             {
-                Limpar();
-                pb_cadastrar_compras.Enabled = true;
-                MessageBox.Show("Compra removida com sucesso");
+                bool sucessEst = estoque_conn.Update(estoque);
+               
+                if (sucessEst == true)
+                {
+                    bool sucess = compra_conn.Delete(compra);
+                    if (sucess == true)
+                    {
+                        Limpar();
+                        pb_cadastrar_compras.Enabled = true;
+                        MessageBox.Show("Compra removida com sucesso");
+                    }
+                    else
+                {
+                        MessageBox.Show("Não foi possível remover essa compra, favor entrar em contato com o suporte.");
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Não foi possível alterar o estoque, favor entrar em contato com o suporte.");
+                }
             }
             else
             {
-                MessageBox.Show("Não foi possível remover essa compra, favor entrar em contato com o suporte.");
+                MessageBox.Show("Não é permitido estoque negativo");
             }
         }
 
@@ -269,6 +319,7 @@ namespace DesafioVendas.Forms
 
         private void bt_salvar_cliente_Click(object sender, EventArgs e)
         {
+            compra.id_compras = Convert.ToInt32(tb_id_compras.Text);
             compra.nota_fiscal = tb_nf_compras.Text;
             compra.data_entrada = tb_dt_entrada_compras.Text;
             compra.nome_produto = tb_produto_compras.Text;

@@ -95,6 +95,7 @@ namespace DesafioVendas.Conexao_BD
                 cmd.Parameters.AddWithValue("@nome_produto", produto.nome_produto);
                 cmd.Parameters.AddWithValue("@cod_barra", produto.cod_barra);
                 cmd.Parameters.AddWithValue("@valor_venda", produto.valor_venda);
+                cmd.Parameters.AddWithValue("@id_produto", produto.id_produto);
 
                 conn.Open();
                 int linhas = cmd.ExecuteNonQuery();

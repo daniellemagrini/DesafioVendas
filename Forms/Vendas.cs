@@ -83,34 +83,67 @@ namespace DesafioVendas.Forms
 
         private void tb_cpf_cnpj_venda_Leave(object sender, EventArgs e)
         {
-            DataTable dt = new DataTable();
-            string keywords;
-            venda.cpf_cnpj_cliente = tb_cpf_cnpj_venda.Text;
-            venda.nome_cliente = tb_cliente_venda.Text;
-            keywords = tb_cpf_cnpj_venda.Text;
-            dt = cliente_conn.Search(keywords);
-            tb_cliente_venda.Text = dt.Rows[0]["nome"].ToString();
+            if(tb_cpf_cnpj_venda.Text != "")
+            {
+                DataTable dt = new DataTable();
+                string keywords;
+                venda.cpf_cnpj_cliente = tb_cpf_cnpj_venda.Text;
+                venda.nome_cliente = tb_cliente_venda.Text;
+                keywords = tb_cpf_cnpj_venda.Text;
+                dt = cliente_conn.Search(keywords);
+
+                if (dt.Rows.Count > 0)
+                {
+                    pb_cadastrar_venda.Enabled = true;
+                    tb_cliente_venda.Text = dt.Rows[0]["nome"].ToString();
+                }
+                else
+                {
+                    MessageBox.Show("Cliente não encontrado");
+                    pb_cadastrar_venda.Enabled = false;
+                }
+            }
+            else
+            {
+                return;
+            }
         }
 
         private void tb_cod_barra_venda_Leave(object sender, EventArgs e)
         {
-            DataTable dt = new DataTable();
-            string keywords;
-            venda.cod_barra = tb_cod_barra_venda.Text;
-            venda.nome_produto = tb_produto_venda.Text;
-            keywords = tb_cod_barra_venda.Text;
-            dt = produto_conn.Search(keywords);
-            tb_produto_venda.Text = dt.Rows[0]["nome_produto"].ToString();
-            tb_vl_produto_venda.Text = dt.Rows[0]["valor_venda"].ToString();
-            venda.valor_produto = Convert.ToDouble(tb_vl_produto_venda.Text);
-            tb_desconto_venda.Text = "0.00";
-            tb_qtde_produto_venda.Text = "1";
+            if (tb_cod_barra_venda.Text != "")
+            {
+                DataTable dt = new DataTable();
+                string keywords;
+                venda.cod_barra = tb_cod_barra_venda.Text;
+                venda.nome_produto = tb_produto_venda.Text;
+                keywords = tb_cod_barra_venda.Text;
+                dt = produto_conn.Search(keywords);
 
-            venda.qtde = Convert.ToInt32(tb_qtde_produto_venda.Text);
-            venda.desconto = Convert.ToDouble(tb_desconto_venda.Text);
-            venda.valor_produto = Convert.ToDouble(tb_vl_produto_venda.Text);
-            venda.valor_total = (venda.valor_produto * venda.qtde) - venda.desconto;
-            tb_vl_total_venda.Text = Convert.ToString(venda.valor_total);
+                if (dt.Rows.Count > 0)
+                {
+                    pb_cadastrar_venda.Enabled = true;
+                    tb_produto_venda.Text = dt.Rows[0]["nome_produto"].ToString();
+                    tb_vl_produto_venda.Text = dt.Rows[0]["valor_venda"].ToString();
+                    venda.valor_produto = Convert.ToDouble(tb_vl_produto_venda.Text);
+                    tb_desconto_venda.Text = "0.00";
+                    tb_qtde_produto_venda.Text = "1";
+                    venda.qtde = Convert.ToInt32(tb_qtde_produto_venda.Text);
+                    venda.desconto = Convert.ToDouble(tb_desconto_venda.Text);
+                    venda.valor_produto = Convert.ToDouble(tb_vl_produto_venda.Text);
+                    venda.valor_total = (venda.valor_produto * venda.qtde) - venda.desconto;
+                    tb_vl_total_venda.Text = Convert.ToString(venda.valor_total);
+                }
+                else
+                {
+                    MessageBox.Show("Produto não encontrado");
+                    pb_cadastrar_venda.Enabled = false;
+                }
+            }
+            else
+            {
+                return;
+            }
         }
 
         private void bt_limpar_vendas_Click(object sender, EventArgs e)
@@ -151,20 +184,34 @@ namespace DesafioVendas.Forms
 
         private void tb_desconto_venda_Leave(object sender, EventArgs e)
         {
-            venda.qtde = Convert.ToInt32(tb_qtde_produto_venda.Text);
-            venda.desconto = Convert.ToDouble(tb_desconto_venda.Text);
-            venda.valor_produto = Convert.ToDouble(tb_vl_produto_venda.Text);
-            venda.valor_total = (venda.valor_produto * venda.qtde) - venda.desconto;
-            tb_vl_total_venda.Text = Convert.ToString(venda.valor_total);
+            if (tb_desconto_venda.Text != "")
+            {
+                venda.qtde = Convert.ToInt32(tb_qtde_produto_venda.Text);
+                venda.desconto = Convert.ToDouble(tb_desconto_venda.Text);
+                venda.valor_produto = Convert.ToDouble(tb_vl_produto_venda.Text);
+                venda.valor_total = (venda.valor_produto * venda.qtde) - venda.desconto;
+                tb_vl_total_venda.Text = Convert.ToString(venda.valor_total);
+            }
+            else
+            {
+                return;
+            }
         }
 
         private void tb_qtde_produto_venda_Leave(object sender, EventArgs e)
         {
-            venda.qtde = Convert.ToInt32(tb_qtde_produto_venda.Text);
-            venda.desconto = Convert.ToDouble(tb_desconto_venda.Text);
-            venda.valor_produto = Convert.ToDouble(tb_vl_produto_venda.Text);
-            venda.valor_total = (venda.valor_produto * venda.qtde) - venda.desconto;
-            tb_vl_total_venda.Text = Convert.ToString(venda.valor_total);
+            if (tb_qtde_produto_venda.Text != "")
+            {
+                venda.qtde = Convert.ToInt32(tb_qtde_produto_venda.Text);
+                venda.desconto = Convert.ToDouble(tb_desconto_venda.Text);
+                venda.valor_produto = Convert.ToDouble(tb_vl_produto_venda.Text);
+                venda.valor_total = (venda.valor_produto * venda.qtde) - venda.desconto;
+                tb_vl_total_venda.Text = Convert.ToString(venda.valor_total);
+            }
+            else
+            {
+                return;
+            }
         }
 
         private void pb_consultar_venda_Click(object sender, EventArgs e)
@@ -175,7 +222,7 @@ namespace DesafioVendas.Forms
             venda.cpf_cnpj_cliente = tb_cpf_cnpj_venda.Text;
             venda.nome_cliente = tb_cliente_venda.Text;
             venda.nome_produto = tb_produto_venda.Text;
-            venda.qtde =Convert.ToInt32(tb_qtde_produto_venda.Text);
+            venda.qtde = Convert.ToInt32(tb_qtde_produto_venda.Text);
             venda.cod_barra = tb_cod_barra_venda.Text;
             venda.valor_produto = Convert.ToDouble(tb_vl_produto_venda.Text);
             venda.desconto = Convert.ToDouble(tb_desconto_venda.Text);
@@ -207,16 +254,6 @@ namespace DesafioVendas.Forms
 
         private void pb_cadastrar_venda_Click(object sender, EventArgs e)
         {
-
-            DataTable dt = new DataTable();
-            estoque.cod_barra = tb_cod_barra_venda.Text;           
-            dt = estoque_conn.Search(tb_cod_barra_venda.Text);
-            int qtdeEmEstoque = Convert.ToInt32(dt.Rows[0]["qtde"].ToString());
-            int novaQtdeEstoque = qtdeEmEstoque - Convert.ToInt32(tb_qtde_produto_venda.Text);
-            estoque.qtde = novaQtdeEstoque;
-
-            bool sucess1 = estoque_conn.Update(estoque);
-
             // VERIFICA SE O CAMPO ESTÁ VAZIO
             Tratamento ttb = new Tratamento();
             if (ttb.CampoVazio(tb_dt_venda, "DATA"))
@@ -246,19 +283,52 @@ namespace DesafioVendas.Forms
             venda.valor_produto = Convert.ToDouble(tb_vl_produto_venda.Text);
             venda.desconto = Convert.ToDouble(tb_desconto_venda.Text);
             venda.valor_total = Convert.ToDouble(tb_vl_total_venda.Text);
+            estoque.nome_produto = tb_cliente_venda.Text;
+            estoque.cod_barra = tb_cod_barra_venda.Text;
+            estoque.qtde = Convert.ToInt32(tb_qtde_produto_venda.Text);
 
-            bool sucess = venda_conn.Insert(venda);
+            DataTable dt = new DataTable();
+            DataTable dt2 = new DataTable();
+            string cod;
+            cod = tb_cod_barra_venda.Text;
+            dt = estoque_conn.Search(cod);
 
-            if (sucess == true)
+            if (dt.Rows.Count <= 0)
             {
-                //DA A MENSAGEM PARA AVISAR QUE FOI CADASTRADO OU NÃO E LIMPA TODOS OS CAMPOS
-                MessageBox.Show("Venda Cadastrada com sucesso!");
+                MessageBox.Show("Produto não consta cadastrado no estoque!");
                 Limpar();
             }
             else
             {
-                MessageBox.Show("Não foi possível realizar a venda! Favor tentar novamente ou entrar em contato com o suporte do sistema.");
-            }
+                string id_estoque = dt.Rows[0]["id_estoque"].ToString();
+                string qtde = dt.Rows[0]["qtde"].ToString();
+                estoque.id_estoque = Convert.ToInt32(id_estoque);
+                int qtde_estoque = Convert.ToInt32(qtde);
+                int qtde_venda = Convert.ToInt32(tb_qtde_produto_venda.Text);
+                estoque.qtde = Convert.ToInt32(qtde_estoque) - Convert.ToInt32(tb_qtde_produto_venda.Text);
+
+                if (qtde_venda > qtde_estoque)
+                {
+                    MessageBox.Show("Não temos quantidade suficiente em estoque");
+                }
+                else
+                {
+                    bool sucess = venda_conn.Insert(venda);
+                    bool sucessEst = estoque_conn.Update(estoque);
+
+                    if (sucessEst == true && sucessEst == true)
+                    {
+                        //DA A MENSAGEM PARA AVISAR QUE FOI CADASTRADO OU NÃO E LIMPA TODOS OS CAMPOS
+                        MessageBox.Show("Venda Cadastrada com sucesso!");
+                        Limpar();
+                    }
+                    else
+                    {
+
+                        MessageBox.Show("Não foi possível realizar a venda! Favor tentar novamente ou entrar em contato com o suporte do sistema.");
+                    }
+                }
+            }                   
         }
-    }   
+    }
 }

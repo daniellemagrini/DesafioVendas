@@ -475,6 +475,7 @@ namespace DesafioVendas.Forms
 
         private void bt_salvar_cliente_Click(object sender, EventArgs e)
         {
+            cliente.id_cliente = Convert.ToInt32(tb_id_cliente.Text);
             cliente.tipo = cb_tipo_cliente.Text;
             cliente.cpf_cpnj = tb_cpf_cnpj_cliente.Text;
             cliente.nome = tb_nome_cliente.Text;

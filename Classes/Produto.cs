@@ -8,7 +8,7 @@ namespace DesafioVendas.Classes
 {
     class Produto
     {
-        public string id_produto;
+        public int id_produto;
         public string nome_produto;
         public string cod_barra;
         public double valor_venda;
